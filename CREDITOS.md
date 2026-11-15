@@ -17,6 +17,9 @@ O Motion Turbo é só um guia e um instalador. As ferramentas, as imagens e os e
 | React Postprocessing | Poimandres (pmndrs) | https://github.com/pmndrs/react-postprocessing |
 | librosa | equipe librosa | https://github.com/librosa/librosa |
 | Video ShotCraft | Vincentwei1021 | https://github.com/Vincentwei1021/video-shotcraft |
+| HyperFrames | HeyGen (Apache 2.0) | https://github.com/heygen-com/hyperframes |
+| One Take | Patrick (feitangyuan); PolyForm Noncommercial 1.0.0, uso comercial pela licença onetake Pro | https://github.com/feitangyuan/onetake |
+| gbro-collage-broll | pyang5166 (MIT) | https://github.com/pyang5166/gbro-collage-broll |
 
 ## Imagens das ferramentas (`imagens/01-…jpg` a `imagens/10-…jpg`)
 
@@ -25,6 +28,15 @@ São quadros do carrossel **"10 GitHub repos to 10x your AI motion graphics"**, 
 Todos os direitos são do autor. Elas aparecem aqui só para ilustrar e dar referência, com crédito e link para o post original. Foi esse post que reuniu a lista das 10 ferramentas.
 
 Os vídeos de demonstração dentro desses quadros foram feitos com as ferramentas listadas acima. O personagem laranja (Clawd) que aparece na imagem 06 é da Anthropic.
+
+## Imagens 11 a 14 e fontes da segunda leva
+
+- `imagens/11-hyperframes.jpg`: quadro do GIF de apresentação do repositório HyperFrames, © HeyGen, Apache 2.0.
+- `imagens/12-onetake.jpg`: quadros do filme de lançamento do One Take (`assets/hero.gif`), © Patrick (feitangyuan), material do repositório sob PolyForm Noncommercial 1.0.0.
+- `imagens/13-collage-broll.jpg`: último quadro dos 4 GIFs de demonstração do gbro-collage-broll, © pyang5166, MIT.
+- `imagens/14-documentario-mapas.jpg`: slides 1, 5 e 7 do carrossel "Make 1-hour documentaries with Claude Code", de **Nitin Chougale (@classified.ai)**: https://www.instagram.com/p/DfbleGMiSJm/ . Todos os direitos são do autor; aparecem aqui só como referência, com crédito.
+- HyperFrames, One Take e Collage B-roll foram apresentadas no reel de **Fabiano Carvalho (@fabianocarvalhojr)**: https://www.instagram.com/reel/Dff5HhgDeZM/
+- A página **"69 Claude Animation Styles"** da **Applied AI** (https://www.its-applied-ai.com/r/styles) está citada na skill `video-prompts` como fonte de prompts. Nada dela foi copiado para este repositório.
 
 ## Pôsteres dos estilos (`imagens/estilos/*.jpg` e `imagens/catalogo-estilos-lemo.jpg`)
 

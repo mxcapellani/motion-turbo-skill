@@ -51,6 +51,9 @@ Saída: uma linha por peça, com `OK`, `FALTA`, `AVISO`, `INFO` ou `DICA`, e o c
 | Peça | Como instalar (só se FALTA) | Observação |
 |---|---|---|
 | Lemo Opuscar | `claude plugin marketplace add lemomo-ai/lemo-opuscar` e depois `claude plugin install lemo-opuscar@lemolab` | Plugin oficial. No primeiro uso ele baixa a biblioteca (~15 MB) em `~/lemo-opuscar`. |
+| HyperFrames | `claude plugin marketplace add heygen-com/hyperframes` e depois `claude plugin install hyperframes@hyperframes` | Se já houver `~/.claude/skills/hyperframes`, conta como instalado: não duplique. Pede Node 22+. |
+| One Take | `git clone --depth 1 https://github.com/feitangyuan/onetake.git ~/.claude/skills/onetake` e depois `python -m pip install playwright matplotlib` e `python -m playwright install chromium` | Grátis só para uso não comercial: avise o usuário disso ao instalar. O Chromium baixa ~150 MB. |
+| Collage B-roll | **não instalar automaticamente** | É paga (API do Gemini, cobrada por vídeo) e feita para o Codex. Só com o ok do usuário depois de explicar o custo: `git clone --depth 1 https://github.com/pyang5166/gbro-collage-broll.git ~/.claude/skills/gbro-collage-broll`. A chave `GEMINI_API_KEY` o próprio usuário configura; nunca pedir no chat. |
 | Video ShotCraft | `git clone --depth 1 https://github.com/Vincentwei1021/video-shotcraft.git ~/.claude/skills/video-shotcraft` | Só se a pasta não existir. |
 | PixelFX | `claude plugin marketplace add patch-gg/pixelfx` e depois `claude plugin install pixelfx@pixelfx` | Se já houver `~/.claude/skills/pixelfx`, conta como instalado: não instale o plugin em duplicidade. |
 | Blender MCP | `uvx mcp-for-blender setup` | Mexe no Blender e na configuração dos apps (faz `.bak` sozinho). **Pergunte antes** e peça para o usuário reabrir o app e o Blender depois. Se já existir um MCP `blender`, não mexa. |

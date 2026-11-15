@@ -41,7 +41,7 @@ Numa conversa nova, escreva algo como:
 
 O Claude vai:
 1. **Fazer até 4 perguntas rápidas:** o tema, o objetivo (explicar, vender, contar uma história), o formato (vertical para Reels/Shorts ou horizontal) e se você tem logo, cores, narração ou música.
-2. **Sugerir 3 caminhos diferentes**, cada um com um estilo e o motivo.
+2. **Sugerir 3 caminhos diferentes**, cada um com um estilo e o motivo. A **opção 1 é sempre a que ele recomenda** para o seu tema (marcada como RECOMENDADO). Se você não souber escolher, é só dizer "escolhe você".
 3. **Mostrar uma imagem** com as 3 opções numeradas, para você escolher olhando:
 
    ![Exemplo de sugestões](imagens/exemplo-sugestoes.jpg)
@@ -58,6 +58,9 @@ O Claude vai:
 - "Faz um vídeo fofo com um mascote explicando por que o céu é azul."
 - "Quero um vídeo estilo videogame retrô sobre a história do meu negócio."
 - "Me dá ideias de vídeo para o meu perfil de receitas."
+- "Coloca títulos animados e legendas no meu vídeo falando." (HyperFrames)
+- "Um vídeo de lançamento sem cortes, a câmera sempre andando." (One Take, grátis só para uso não comercial)
+- "Um documentário de 15 minutos sobre a história do Egito com mapas."
 - "O Motion Turbo está funcionando?"
 
 ## Para o vídeo ficar ainda melhor
@@ -72,6 +75,8 @@ O Claude vai sugerir isso quando fizer sentido. Você também pode já mandar ju
 | **Sua voz gravada** (pelo celular mesmo) | narração com a sua voz; o Claude pode legendar |
 | **Prints ou o link** do seu app ou site | vídeo de lançamento com as telas reais |
 | **Um vídeo de referência** de que você gosta | um estilo mais parecido com o que você imagina |
+
+Uma ferramenta **paga e opcional**: a **Collage B-roll** (colagem de papel animada por baixo da sua fala), que cobra por vídeo no Gemini. O Claude só instala se você aceitar o custo.
 
 Opcionais que o Claude pode instalar se você quiser (todos grátis): **narração por voz sintetizada**, **trilha sonora gerada**, **legendas automáticas** e o **Blender** (para cenas 3D realistas).
 

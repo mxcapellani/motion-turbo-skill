@@ -1,11 +1,11 @@
 ---
 name: motion-turbo
-description: Motion Turbo, o kit de 10 ferramentas open source que deixa o motion feito pelo Claude com cara de estúdio (99 estilos de filme do Lemo Opuscar, 3D com Three.js e Blender, física, brilho/glitch, pixel art, mascote pintado à mão, cortes na batida e promos de produto). Use quando pedirem "motion turbo", "/motion-turbo", "quero um vídeo em motion e não sei o estilo", "me sugere um estilo de vídeo", "qual ferramenta uso pra esse vídeo", "mostra os estilos", ou para instalar/verificar o pacote ("instala o motion turbo", "o motion turbo está funcionando?").
+description: Motion Turbo, o kit de ferramentas open source que deixa o motion feito pelo Claude com cara de estúdio (99 estilos de filme do Lemo Opuscar, HyperFrames, One Take, 3D com Three.js e Blender, física, brilho/glitch, pixel art, mascote pintado à mão, cortes na batida, promos de produto, colagem B-roll e documentário longo com mapas). Use quando pedirem "motion turbo", "/motion-turbo", "quero um vídeo em motion e não sei o estilo", "me sugere um estilo de vídeo", "qual ferramenta uso pra esse vídeo", "mostra os estilos", ou para instalar/verificar o pacote ("instala o motion turbo", "o motion turbo está funcionando?").
 ---
 
 # Motion Turbo
 
-Kit que junta 10 repositórios open source para fazer vídeos em motion com o Claude. O trabalho desta skill é **ser a porta de entrada**: entender o tema, sugerir o caminho e o estilo, mostrar imagens das opções e só então passar para a skill que executa.
+Kit que junta 13 ferramentas open source (as 10 do post original, mais HyperFrames, One Take e Collage B-roll) e receitas, como o documentário longo com mapas, para fazer vídeos em motion com o Claude. O trabalho desta skill é **ser a porta de entrada**: entender o tema, sugerir o caminho e o estilo, mostrar imagens das opções e só então passar para a skill que executa.
 
 ## Fale com quem não é técnico
 
@@ -52,7 +52,13 @@ Se o projeto atual tiver identidade visual ou regras (CLAUDE.md, memórias), use
 
 ## 3. Sugerir 3 opções
 
-Monte **3 opções diferentes entre si** (não três variações do mesmo). Cada opção = caminho + estilo + por que combina, em 1 a 2 linhas. Use esta tabela para escolher o caminho:
+**Sempre recomende o melhor estilo para o tema.** Monte **3 opções diferentes entre si** (não três variações do mesmo), e a **opção 1 é sempre a sua recomendação**, marcada como "Recomendado", com o motivo em uma frase ("combina com o tema porque..."). As outras duas são alternativas reais (outro tom, outro caminho). Cada opção = caminho + estilo + por que combina, em 1 a 2 linhas.
+
+- Para escolher a recomendada, pese: o que o tema pede (explicar, vender, emocionar), a plataforma e a duração, o material que a pessoa tem (telas, voz, marca), a licença e o custo (prefira o grátis) e o tempo de render.
+- Se a pessoa já disse um estilo, respeite. Mas, se outro combinar claramente melhor com o tema, diga em uma frase e deixe ela decidir ("posso fazer em X como você pediu; para esse tema, Y costuma funcionar melhor porque...").
+- Se ela disser "escolhe você", siga direto com a recomendada, sem perguntar de novo.
+
+Use esta tabela para escolher o caminho:
 
 | Objetivo / tema | Caminho (skill que executa) | Estilos do Lemo que costumam combinar |
 |---|---|---|
@@ -62,6 +68,10 @@ Monte **3 opções diferentes entre si** (não três variações do mesmo). Cada
 | Notícia, geopolítica, clima, mapa | `lemo-opuscar` | `caption-news`, `news-package`, `map-explainer`, `satellite-briefing`, `comic-history` |
 | História, época, curiosidade histórica | `lemo-opuscar` | `newsreel`, `vintage-collage`, `archive-lighttable`, `dark-documentary`, `silent-film` |
 | Lançar app/SaaS/site | `video-shotcraft` (+ `librosa` para cortar na batida) | `dark-keynote`, `desktop-flythrough`, `living-screencast`, `hologram-hud` |
+| Lançamento "sem cortes", câmera contínua, demo de recurso | `onetake` (**só uso não comercial**, ver abaixo) | — |
+| Textos animados, legendas, motion graphics sobre um vídeo falado, vinhetas | `hyperframes` | — |
+| B-roll artístico de colagem de papel por baixo da fala | `gbro-collage-broll` (**pago**: Gemini; só com ok) | — |
+| Documentário longo (10 a 60 min) de história ou geografia | receita "Documentário longo com mapas" (abaixo) | `map-explainer`, `comic-history`, `dark-documentary`, `newsreel` |
 | Lançar produto físico / beleza / tech | `video-shotcraft` ou `lemo-opuscar` | `glass-product`, `teardown`, `dark-keynote` |
 | História fofa, infantil, mascote | `claude-animation-base` (Clawd) ou `lemo-opuscar` | `crayon-book`, `paper-popup`, `firefly-pointillism`, `rubber-hose` |
 | Emoção, música, arte, viagem | `lemo-opuscar` (+ `librosa`) | `impasto`, `watercolor`, `ukiyoe`, `silhouette-rhythm`, `double-exposure` |
@@ -82,8 +92,8 @@ python ~/.claude/skills/motion-turbo/motion_turbo.py mostrar \
   --saida "<pasta-de-trabalho>/motion-turbo-sugestoes.jpg"
 ```
 - `--estilos`: slugs do `estilos.json` (usa o pôster do estilo).
-- `--ferramentas`: `lemo`, `threejs`, `pixelfx`, `blender`, `prompts`, `clawd`, `rapier`, `postprocessing`, `librosa`, `shotcraft` (usa a imagem da ferramenta).
-- A imagem numera as opções 1, 2, 3 na ordem passada. Mantenha a mesma numeração no texto.
+- `--ferramentas`: `lemo`, `threejs`, `pixelfx`, `blender`, `prompts`, `clawd`, `rapier`, `postprocessing`, `librosa`, `shotcraft`, `hyperframes`, `onetake`, `collage`, `documentario` (usa a imagem da ferramenta).
+- A imagem numera as opções 1, 2, 3 na ordem: primeiro os `--estilos`, depois as `--ferramentas`. **Passe a recomendada primeiro**: ela sai com a etiqueta "RECOMENDADO". Se a recomendada for uma ferramenta (ex.: `onetake`), use `--primeiro ferramenta`. Mantenha a mesma numeração no texto.
 
 Mostre a imagem ao usuário com a ferramenta de enviar/exibir arquivos que a sessão tiver. Se não houver nenhuma, abra a imagem você mesmo para conferir e informe o caminho clicável. Junto, escreva para cada opção:
 - **Nome em português** do estilo + caminho (qual skill vai fazer).
@@ -100,12 +110,31 @@ Passe para a skill do caminho escolhido e siga as regras dela:
 |---|---|
 | Estilos de filme | `lemo-opuscar` (diga o estilo escolhido pelo nome/slug) |
 | Promo de produto/app | `video-shotcraft` |
+| Lançamento sem cortes | `onetake` |
+| Textos animados, legendas, motion graphics em HTML | `hyperframes` (+ `hyperframes-cli`, `hyperframes-registry`) |
+| Colagem B-roll | `gbro-collage-broll` (só depois do ok do custo) |
+| Documentário longo | receita abaixo |
 | Mascote pintado à mão | `claude-animation-base` |
 | Pixel art / efeitos | `pixelfx` |
 | 3D com física, brilho, grão | `r3f-fisica-pos` (+ Three.js no projeto) |
 | Cena no Blender | skills de Blender + MCP `blender` |
 | Ideias/prompts prontos | `video-prompts` |
 | Cortes na batida | `librosa` (Python): `librosa.beat.beat_track` na música, e use os tempos das batidas para os cortes |
+
+### Licenças e custos que exigem pergunta antes
+
+- **One Take:** grátis só para **uso não comercial** (licença PolyForm Noncommercial). Antes de usar, pergunte: "esse vídeo é para cliente, empresa ou venda?". Se for, diga que o uso comercial pede a licença **onetake Pro (US$ 79, pagamento único, onetakemotion.com)** e ofereça como alternativa grátis `video-shotcraft` ou `hyperframes`.
+- **Collage B-roll:** cada vídeo é gerado pela API do **Gemini** e **cobrado por uso** na conta Google do usuário. Ela também foi feita para o Codex, que gera as imagens paradas com uma ferramenta própria; no Claude, essa etapa precisa de outro gerador de imagem (também pode ser pago). Explique isso, dê a estimativa de custo e só instale ou use com o ok. A chave `GEMINI_API_KEY` é configurada pelo próprio usuário, nunca colada no chat.
+
+## Receita: documentário longo com mapas (10 a 60 min)
+
+Inspirada no fluxo "um tema, um documentário de 1 hora" (@classified.ai). Bom para história, geopolítica e geografia.
+1. **Um tema** ("Como o Império Otomano ficou tão grande?"). Pergunte duração, idioma, formato (16:9 para YouTube) e o tom.
+2. **Pesquisa e roteiro:** linha do tempo, batalhas, personagens e mapas. Divida em **capítulos de 3 a 6 min** e cada capítulo em cenas de 10 a 30 s. Mostre o roteiro e espere o ok. Cite fontes no fim do roteiro.
+3. **Cada cena em código:** mapa animado (fronteiras crescendo, exércitos em setas, ano no canto, retratos em círculo). Use o estilo `map-explainer` ou `comic-history` do `lemo-opuscar`, ou a `hyperframes` com mapas e legendas. Faça uma cena de amostra parada e espere o ok do visual.
+4. **Narração:** a voz do próprio usuário (gravada pelo celular) ou narração local grátis (voz do Lemo). Voz profissional paga só com ok do custo. Legende com Whisper.
+5. **Ajustes em uma frase:** "deixa o mapa noturno", "mais lento no capítulo 3". Mude o estilo global e renderize de novo só o que mudou.
+6. **Render por capítulo** (um MP4 por capítulo, depois junta com ffmpeg). Um vídeo de 1 hora tem ~108 mil quadros: avise que pode levar horas e rode em segundo plano.
 
 ## 6. Sugerir o que falta para um vídeo melhor
 
@@ -128,6 +157,7 @@ O vídeo fica muito melhor com material do próprio cliente e com alguns extras 
 - **Trilha gerada grátis** (música do Lemo) quando não há música.
 - **Legendas automáticas** (Whisper) quando há narração; vídeo curto de rede social quase sempre ganha com legenda.
 - **Blender** só se a escolha for cena 3D realista.
+- **Collage B-roll** (pago) quando a pessoa tem vídeo falando para a câmera e quer cortes artísticos por cima.
 - **Sem placa de vídeo dedicada:** avise que estilos de aquarela e 3D pesado demoram mais e ofereça um teste curto ou um estilo mais leve.
 
 Como sugerir: "Para ficar ainda melhor, posso **[extra]** ([ganho]). É grátis e leva uns [tempo] para instalar. Quer?" Só instale com o sim da pessoa. Tudo que for pago (voz profissional, imagem ou vídeo gerado por serviço externo) exige dizer o serviço e o custo e esperar o ok.

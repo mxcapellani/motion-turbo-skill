@@ -2,7 +2,7 @@
 
 > **Novo por aqui e não é da área técnica?** Comece pelo [COMECE-AQUI.md](COMECE-AQUI.md).
 
-**10 ferramentas open source que deixam o motion feito pelo Claude com cara de estúdio.**
+**13 ferramentas open source e receitas que deixam o motion feito pelo Claude com cara de estúdio.**
 
 São estilos de filme prontos, 3D de verdade, física, brilho e glitch, pixel art, um mascote pintado à mão, cortes no ritmo da música e receitas de vídeo de lançamento. Tudo grátis, rodando no seu computador, disponível em qualquer sessão do Claude Code.
 
@@ -14,7 +14,7 @@ Abra qualquer sessão e diga:
 
 O Claude então:
 1. **Pergunta o tema**, o objetivo (explicar, vender, contar história), o formato (vertical ou horizontal) e a duração.
-2. **Sugere 3 caminhos** diferentes, cada um com o estilo e o motivo.
+2. **Sugere 3 caminhos** diferentes, cada um com o estilo e o motivo. A opção 1 é sempre **a recomendada para o seu tema** (etiqueta RECOMENDADO).
 3. **Mostra uma imagem** com as 3 opções numeradas, para você escolher olhando.
 4. Com a sua escolha, **chama a ferramenta certa**, mostra roteiro e um quadro parado e só depois renderiza.
 
@@ -85,6 +85,32 @@ Encontra as batidas da música e sincroniza os cortes com elas. É o que dá a "
 O Claude escolhe o melhor modelo para o lançamento do seu app ou site, usa telas reais, sincroniza com a música e põe efeitos sonoros.
 **Peça:** "um vídeo de lançamento de 20s do meu site". · [repo](https://github.com/Vincentwei1021/video-shotcraft)
 
+### 11 · HyperFrames: vídeo a partir de HTML
+![HyperFrames](imagens/11-hyperframes.jpg)
+*Imagem: do repositório da HyperFrames (HeyGen, Apache 2.0). Créditos completos em [CREDITOS.md](CREDITOS.md).*
+Textos animados, motion graphics, legendas e vinhetas, inclusive por cima de um vídeo seu falando. É o "editor" mais versátil do kit.
+**Peça:** "coloca títulos animados e legendas no meu vídeo falando". · [repo](https://github.com/heygen-com/hyperframes)
+
+### 12 · One Take: lançamento sem cortes
+![One Take](imagens/12-onetake.jpg)
+*Imagem: quadros do filme de lançamento do One Take (feitangyuan). Créditos completos em [CREDITOS.md](CREDITOS.md).*
+Um filme em que a câmera nunca corta: cada cena nasce da anterior. Ótimo para lançamento de app e demonstração de recurso.
+**Licença:** grátis só para **uso não comercial**. Para cliente ou empresa, existe a licença Pro (US$ 79, pagamento único).
+**Peça:** "um vídeo de 20s sem cortes mostrando o meu app". · [repo](https://github.com/feitangyuan/onetake)
+
+### 13 · Collage B-roll: colagem de papel por baixo da fala (opcional, pago)
+![Collage B-roll](imagens/13-collage-broll.jpg)
+*Imagem: demos do repositório gbro-collage-broll (pyang5166, MIT). Créditos completos em [CREDITOS.md](CREDITOS.md).*
+Você passa uma frase do roteiro e ela vira uma colagem animada de papel e foto, para pôr por baixo da sua fala.
+**Custo:** usa a API do Gemini, cobrada por vídeo. O Claude avisa o custo e só instala com o seu ok.
+**Peça:** "transforma essa frase numa colagem animada de 5s". · [repo](https://github.com/pyang5166/gbro-collage-broll)
+
+### 14 · Receita: documentário longo com mapas
+![Documentário com mapas](imagens/14-documentario-mapas.jpg)
+*Imagem: slides do carrossel de Nitin Chougale ([@classified.ai](https://www.instagram.com/p/DfbleGMiSJm/)). Créditos completos em [CREDITOS.md](CREDITOS.md).*
+Um tema vira um documentário de 10 a 60 minutos: pesquisa, roteiro por capítulos, mapas animados em código, narração com a sua voz ou voz local e render por capítulo.
+**Peça:** "um documentário de 20 minutos sobre como o Império Otomano cresceu".
+
 ## Os 99 estilos do Lemo Opuscar
 
 ![Catálogo de estilos](imagens/catalogo-estilos-lemo.jpg)
@@ -96,7 +122,8 @@ O pôster de cada estilo está em `imagens/estilos/<nome>.jpg`, e a lista comple
 
 1. **Estilo e ideia:** Lemo Opuscar, prompt packs, PixelFX, Clawd.
 2. **Cena 3D e efeitos:** Three.js, Blender MCP, React Rapier, React Postprocessing.
-3. **Ritmo e entrega:** librosa e Video ShotCraft, até o MP4 final.
+3. **Ritmo e entrega:** librosa, Video ShotCraft, HyperFrames e One Take, até o MP4 final.
+4. **Extras:** Collage B-roll (pago) e a receita de documentário longo.
 
 ## Instalação
 
@@ -116,6 +143,7 @@ python ~/.claude/skills/motion-turbo/motion_turbo.py verificar
 
 Este pacote só organiza e instala ferramentas de outras pessoas. Todo o crédito vai para elas:
 - **Ferramentas:** os autores de cada repositório linkado acima.
+- **Imagens 11–14:** HyperFrames (HeyGen), One Take (feitangyuan), gbro-collage-broll (pyang5166) e carrossel de Nitin Chougale ([@classified.ai](https://www.instagram.com/p/DfbleGMiSJm/)). Ferramentas 11–13 apresentadas no reel de [Fabiano Carvalho](https://www.instagram.com/reel/Dff5HhgDeZM/); mais prompts em [Applied AI](https://www.its-applied-ai.com/r/styles).
 - **Lista das 10 ferramentas e imagens 01–10:** carrossel de **Matt Penny** ([@matt_penny_applied_ai](https://www.instagram.com/p/DftA9zwk4Re/)).
 - **Pôsteres e catálogo de estilos:** Lemo-Opuscar © 2026 Lemomo (LemoLab), CC BY 4.0.
 - **Clawd** (o personagem laranja) é da Anthropic.

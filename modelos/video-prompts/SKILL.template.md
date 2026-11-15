@@ -9,6 +9,14 @@ Dois repos clonados em `{{REPOS}}`:
 - `awesome-opus5-5-videos` (yihui-dev): ~700 prompts de vídeos virais, com categoria e tags técnicas. Dados em `data/videos.json`, um `.md` por prompt em `prompts/`.
 - `opus-video-prompts` (joeseesun): 54 casos comentados em `prompts/NN-*.md` (launch de startup, explainer de negócio, promo de app em Remotion, line art, pixel art, Three.js...).
 
+## Fonte extra online: 69 estilos da Applied AI
+
+https://www.its-applied-ai.com/r/styles reúne 69 prompts prontos de animação com o Claude, cada um com trechos `[entre colchetes]` para trocar pelo seu tema. Quase todos usam as ferramentas do Motion Turbo (Lemo, Three.js, Blender, Rapier, PixelFX, HyperFrames). O que ele acrescenta:
+- séries feitas na HyperFrames: "mundos de avião de papel" e "lançamento de foguete", em ~10 estilos cada (comic, PS2, claymation, Lego, chalkboard...);
+- um prompt único com `{STYLE}` que gera 10 visuais em Canvas 2D (fur, synthwave, thermal, matrix, CRT, blueprint...).
+
+Use quando o usuário quiser mais ideias de estilo. Leia a página na hora (ela muda) e cite a fonte (Applied AI). Os prompts não recriam o original pixel a pixel.
+
 ## Buscar
 
 ```bash

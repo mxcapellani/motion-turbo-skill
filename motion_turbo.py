@@ -49,6 +49,10 @@ FERRAMENTAS = {
     "postprocessing": ("08-react-postprocessing.jpg", "React Postprocessing", "brilho, grão, glitch"),
     "librosa": ("09-librosa.jpg", "librosa", "cortes na batida da música"),
     "shotcraft": ("10-video-shotcraft.jpg", "Video ShotCraft", "promo de produto/app"),
+    "hyperframes": ("11-hyperframes.jpg", "HyperFrames", "textos animados, motion graphics, legendas"),
+    "onetake": ("12-onetake.jpg", "One Take", "lançamento sem cortes (uso não comercial)"),
+    "collage": ("13-collage-broll.jpg", "Collage B-roll", "colagem de papel sob a fala (pago: Gemini)"),
+    "documentario": ("14-documentario-mapas.jpg", "Documentário de mapas", "vídeo longo com mapas animados"),
 }
 POSTER_URL = "https://raw.githubusercontent.com/lemomo-ai/lemo-opuscar/main/styles/{slug}/poster.jpg"
 
@@ -173,6 +177,29 @@ def verificar(a):
     px = (SKILLS / "pixelfx" / "SKILL.md").exists() or "pixelfx@" in plugins
     add("OK" if px else "FALTA", "PixelFX (skill)", "instalado" if px else "não instalado",
         "claude plugin marketplace add patch-gg/pixelfx && claude plugin install pixelfx@pixelfx")
+    hf = (SKILLS / "hyperframes" / "SKILL.md").exists() or "hyperframes@" in plugins
+    add("OK" if hf else "FALTA", "HyperFrames (skill)", "instalado" if hf else "não instalado",
+        "claude plugin marketplace add heygen-com/hyperframes && claude plugin install hyperframes@hyperframes")
+    if hf and tem("node"):
+        _, v = rodar(["node", "-v"])
+        try:
+            if int(v.strip().lstrip("v").split(".")[0]) < 22:
+                add("AVISO", "HyperFrames: Node 22+", f"{v.strip()} instalado; a HyperFrames pede Node 22 ou mais novo")
+        except Exception:
+            pass
+    ot = (SKILLS / "onetake" / "SKILL.md").exists()
+    add("OK" if ot else "FALTA", "One Take (skill)", "instalado (grátis só para uso não comercial)" if ot else "não instalado",
+        "git clone --depth 1 https://github.com/feitangyuan/onetake.git ~/.claude/skills/onetake")
+    if ot:
+        rc, _ = rodar([sys.executable, "-c", "import playwright, matplotlib"])
+        add("OK" if rc == 0 else "FALTA", "One Take: dependências Python", "playwright e matplotlib ok" if rc == 0 else
+            "faltam playwright e/ou matplotlib",
+            f'"{sys.executable}" -m pip install playwright matplotlib && "{sys.executable}" -m playwright install chromium')
+    col = (SKILLS / "gbro-collage-broll" / "SKILL.md").exists()
+    gem = bool(os.environ.get("GEMINI_API_KEY"))
+    add("OK" if col and gem else "DICA", "Collage B-roll (opcional, PAGO)",
+        "instalado e com chave do Gemini" if col and gem else
+        "não instalado de propósito: cobra por vídeo na API do Gemini; só instalar se o usuário aceitar o custo")
     rc, out = rodar(["claude", "mcp", "get", "blender"], timeout=120)
     add("OK" if rc == 0 else "FALTA", "Blender MCP (conector)", "configurado" if rc == 0 else "não configurado",
         "uvx mcp-for-blender setup   (instala o addon no Blender e adiciona o MCP; depois reabrir o app)")
@@ -315,6 +342,10 @@ def mostrar(a):
     from PIL import Image, ImageDraw
     estilos = {e["slug"]: e for e in json.loads((PACOTE / "estilos.json").read_text(encoding="utf-8"))}
     itens = []
+    # a recomendada pode ser uma ferramenta: --primeiro ferramenta coloca as ferramentas antes dos estilos
+    ordem = ["ferramentas", "estilos"] if a.primeiro == "ferramenta" else ["estilos", "ferramentas"]
+    blocos = {"estilos": [], "ferramentas": []}
+    itens = blocos["estilos"]
     for s in a.estilos or []:
         e = estilos.get(s)
         if not e:
@@ -326,7 +357,11 @@ def mostrar(a):
         if f not in FERRAMENTAS:
             print(f"ferramenta desconhecida: {f} (opções: {', '.join(FERRAMENTAS)})"); continue
         arq, nome, desc = FERRAMENTAS[f]
-        itens.append((PACOTE / "imagens" / arq, nome, desc))
+        blocos["ferramentas"].append((PACOTE / "imagens" / arq, nome, desc))
+    itens = blocos[ordem[0]] + blocos[ordem[1]]
+    if itens and not a.sem_recomendado:
+        p0, t0, d0 = itens[0]
+        itens[0] = (p0, f"Recomendado: {t0}", d0)
     if not itens:
         print("nada para mostrar"); return 1
     tw, th, lh, pad = 640, 360, 76, 16
@@ -339,6 +374,10 @@ def mostrar(a):
         im = Image.open(p).convert("RGB")
         im.thumbnail((tw, th)); bg = Image.new("RGB", (tw, th), (20, 20, 20))
         bg.paste(im, ((tw - im.width) // 2, (th - im.height) // 2)); img.paste(bg, (x, y))
+        if i == 0 and not a.sem_recomendado:  # etiqueta da opção recomendada
+            d.rounded_rectangle([x, y, x + tw - 1, y + th - 1], radius=6, outline=(234, 88, 12), width=6)
+            d.rounded_rectangle([x + 12, y + 12, x + 232, y + 54], radius=8, fill=(234, 88, 12))
+            d.text((x + 26, y + 20), "RECOMENDADO", fill=(255, 255, 255), font=fonte(24))
         d.text((x + 4, y + th + 8), f"{i + 1}. {t1}", fill=(25, 25, 25), font=f1)
         d.text((x + 4, y + th + 44), t2, fill=(90, 90, 90), font=f2)
     saida = Path(a.saida or "motion-turbo-sugestoes.jpg").resolve()
@@ -354,6 +393,9 @@ def main():
     m = sub.add_parser("instalar-modelos"); m.add_argument("--repos", required=True)
     s = sub.add_parser("mostrar"); s.add_argument("--estilos", nargs="*"); s.add_argument("--ferramentas", nargs="*")
     s.add_argument("--saida")
+    s.add_argument("--primeiro", choices=["estilo", "ferramenta"], default="estilo",
+                   help="o que vem primeiro (a opção 1 é a recomendada)")
+    s.add_argument("--sem-recomendado", action="store_true", help="não marcar a opção 1 como recomendada")
     a = p.parse_args()
     sys.exit({"verificar": verificar, "instalar-modelos": instalar_modelos, "mostrar": mostrar}[a.cmd](a))
 
