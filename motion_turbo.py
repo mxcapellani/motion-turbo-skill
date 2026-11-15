@@ -67,6 +67,39 @@ def tem(cmd):
     return shutil.which(cmd) is not None
 
 
+def blender_instalado():
+    """Blender em qualquer drive: registro do Windows, pastas comuns, Mac e Linux."""
+    if Path("/Applications/Blender.app").exists() or Path("/usr/bin/blender").exists() or Path("/snap/bin/blender").exists():
+        return True
+    if os.name != "nt":
+        return False
+    try:
+        import winreg
+        chaves = [(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows\CurrentVersion\Uninstall"),
+                  (winreg.HKEY_LOCAL_MACHINE, r"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"),
+                  (winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Uninstall")]
+        for raiz, caminho in chaves:
+            try:
+                k = winreg.OpenKey(raiz, caminho)
+            except OSError:
+                continue
+            for i in range(winreg.QueryInfoKey(k)[0]):
+                try:
+                    sub = winreg.OpenKey(k, winreg.EnumKey(k, i))
+                    if "blender" in str(winreg.QueryValueEx(sub, "DisplayName")[0]).lower():
+                        return True
+                except OSError:
+                    continue
+    except Exception:
+        pass
+    for letra in "CDEFG":
+        for base in [rf"{letra}:\Program Files\Blender Foundation",
+                     rf"{letra}:\Program Files (x86)\Steam\steamapps\common\Blender"]:
+            if Path(base).exists():
+                return True
+    return False
+
+
 def repos_atual(arg):
     if arg:
         return Path(arg).expanduser()
@@ -201,7 +234,7 @@ def verificar(a):
     rc, _ = rodar([sys.executable, "-c", "import importlib.util as u,sys;sys.exit(0 if (u.find_spec('whisper') or u.find_spec('faster_whisper')) else 1)"])
     add("OK" if rc == 0 else "DICA", "Legendas automáticas (Whisper)", "instalado" if rc == 0 else
         "opcional, para legendar a narração: pip install faster-whisper (baixa modelo de ~500 MB)")
-    blender = tem("blender") or any(Path(p).exists() for p in [r"C:\Program Files\Blender Foundation", "/Applications/Blender.app"])
+    blender = tem("blender") or blender_instalado()
     add("OK" if blender else "DICA", "Blender (app)", "instalado" if blender else
         "opcional, só para cenas realistas: baixar grátis em blender.org")
     gpu = tem("nvidia-smi")
